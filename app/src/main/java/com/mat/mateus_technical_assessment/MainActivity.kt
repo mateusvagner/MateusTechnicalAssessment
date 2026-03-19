@@ -50,6 +50,10 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     MateusTechnicalAssessmentTheme {
-        Greeting("Android")
+        Greeting(
+            modifier = Modifier
+                .fillMaxSize(),
+            name = "Android"
+        )
     }
 }

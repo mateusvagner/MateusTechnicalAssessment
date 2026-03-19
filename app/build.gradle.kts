@@ -1,7 +1,11 @@
+import org.jetbrains.kotlin.gradle.internal.config.AnalysisFlags.optIn
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.ksp)
+    alias(libs.plugins.kotlin.android)
 }
 
 android {
@@ -38,6 +42,13 @@ android {
     buildFeatures {
         compose = true
     }
+
+    kotlin {
+        jvmToolchain {
+            languageVersion.set(JavaLanguageVersion.of(11))
+        }
+    }
+
 }
 
 dependencies {
@@ -58,6 +69,6 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
     // Room
-    ksp(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
     implementation(libs.bundles.room)
 }
