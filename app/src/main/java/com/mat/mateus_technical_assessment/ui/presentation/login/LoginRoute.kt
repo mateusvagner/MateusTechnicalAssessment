@@ -5,12 +5,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mat.mateus_technical_assessment.ui.theme.MateusTechnicalAssessmentTheme
 
 @Composable
@@ -19,6 +24,16 @@ fun LoginRoute(
     viewModel: LoginViewModel
 ) {
 
+    val uiState by viewModel.uiState.collectAsState()
+
+    LoginScreen(
+        modifier = modifier,
+        uiState = uiState,
+        onUserNameChanged = viewModel::onUserNameChanged,
+        onPasswordChanged =  viewModel::onPasswordChanged,
+        onLoginPressed =  viewModel::onLoginPressed
+    )
+
 }
 
 @Composable
@@ -26,7 +41,8 @@ private fun LoginScreen(
     modifier: Modifier = Modifier,
     uiState: LoginUiState,
     onUserNameChanged: (String) -> Unit,
-    onPasswordChanged: (String) -> Unit
+    onPasswordChanged: (String) -> Unit,
+    onLoginPressed: () -> Unit
 ) {
     Column(
         modifier = modifier.fillMaxSize(),
@@ -34,23 +50,32 @@ private fun LoginScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         TextField(
-            value = uiState.userName,
-            onValueChange = {
-
+            placeholder = {
+                Text("Type your name")
             },
+            value = uiState.userName,
+            onValueChange = onUserNameChanged,
+            isError = !uiState.isUserNameValid
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
         TextField(
-            value = uiState.userPassword,
-            onValueChange = {
-
+            placeholder = {
+                Text("Type your password")
             },
+            value = uiState.userPassword,
+            onValueChange = onPasswordChanged,
+            isError = !uiState.isUserPasswordValid
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
+        Button(
+            onClick = onLoginPressed
+        ) {
+            Text("Login!")
+        }
     }
 }
 
@@ -66,7 +91,8 @@ private fun LoginScreenPreview() {
                 isUserNameValid = true,
             ),
             onUserNameChanged = {},
-            onPasswordChanged = {}
+            onPasswordChanged = {},
+            onLoginPressed = {}
         )
     }
 }

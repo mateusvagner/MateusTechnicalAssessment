@@ -1,8 +1,6 @@
 package com.mat.mateus_technical_assessment
 
-import com.mat.mateus_technical_assessment.data.local.LocalStorage
 import com.mat.mateus_technical_assessment.domain.LoginUseCase
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
