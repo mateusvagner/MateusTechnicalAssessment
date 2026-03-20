@@ -68,6 +68,9 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
+    implementation(libs.android.coroutine)
+    testImplementation(libs.android.coroutine.test)
+
     // Room
     ksp(libs.androidx.room.compiler)
     implementation(libs.bundles.room)
